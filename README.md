@@ -15,7 +15,7 @@
 | 包 | 作用 |
 |---|---|
 | `npm:pi-subagents` | 子代理运行时（本仓库两个 maker 代理的宿主） |
-| `npm:pi-web-access` | Web 检索/抓取；经 `subagents.agentOverrides.researcher` 注入 `researcher` 代理 |
+| `npm:pi-web-access` | Web 检索/抓取；由 `agents/researcher.md` 自己的 `subagentOnlyExtensions` 注入该代理的子会话 |
 | `npm:pi-zentui` | TUI 外观 |
 | `npm:pi-compact-transcript` | 紧凑转录 |
 | `npm:pi-token-speed` | token 速率显示 |
@@ -26,6 +26,11 @@
 > 取代了历史上曾使用的 `@juicesharp/rpiv-ask-user-question`（已从 `packages` 移除，勿再加回）。
 >
 > `npm/` 目录（含其 `package.json` / lockfile）由 pi 依上面这份 `packages` 自动生成，属**派生产物**，不入库。
+>
+> ⚠️ **`settings.json` 实际上由 pi 拥有**：它保存设置时重写**整个对象**，会把自己实体化的默认键写回
+> （`lastChangelogVersion`、`hideThinkingBlock`、`outputPad`，重新登录时还会有 `deviceId`）。因此「只留
+> `packages` / `defaultProvider` / `defaultModel` / `subagents` 的最小集合」**不是持久状态**，每次跑完
+> pi-learn 都可能再长回几行。提交时不必刻意剔除这些键——与 pi 拉扯只会反复脏工作区。
 
 ---
 
