@@ -10,7 +10,7 @@
 
 ---
 
-## 1. 依赖的 pi 包（`settings.json` → `packages`）
+## 1. 依赖的 pi 包（`Recommend_Setting.json` → `packages`）
 
 | 包 | 作用 |
 |---|---|
@@ -27,10 +27,13 @@
 >
 > `npm/` 目录（含其 `package.json` / lockfile）由 pi 依上面这份 `packages` 自动生成，属**派生产物**，不入库。
 >
-> ⚠️ **`settings.json` 实际上由 pi 拥有**：它保存设置时重写**整个对象**，会把自己实体化的默认键写回
-> （`lastChangelogVersion`、`hideThinkingBlock`、`outputPad`，重新登录时还会有 `deviceId`）。因此「只留
-> `packages` / `defaultProvider` / `defaultModel` / `subagents` 的最小集合」**不是持久状态**，每次跑完
-> pi-learn 都可能再长回几行。提交时不必刻意剔除这些键——与 pi 拉扯只会反复脏工作区。
+> ℹ️ **仓库里跟踪的是推荐模板 `Recommend_Setting.json`，而不是 `settings.json` 本身。**
+> 换机时只要 `cp Recommend_Setting.json settings.json`（本仓库的 agent dir 即本仓库自身）即可。
+>
+> ⚠️ 为什么不直接入库 `settings.json`：它**实际上由 pi 拥有**——pi 保存设置时重写**整个对象**，会把自己
+> 实体化的默认键写回（`lastChangelogVersion`、`hideThinkingBlock`、`outputPad`，重新登录时还有 `deviceId`），
+> 因此它必然混入本机状态、并随使用不断变化，跟踪它只会反复脏工作区。`settings.json` 已在 `.gitignore`
+> 中被忽略；`Recommend_Setting.json` 只保留跨机可复用的四项关键设置，不受 pi 写回影响。
 
 ---
 
@@ -83,9 +86,9 @@ cd ~/.pi/profiles/learning/extensions/visual-tools && npm install
 
 即：**"本机没装系统 Chromium" 并不等于渲染不可用**——只要上面任一条命中即可。
 
-### 3.2 代理可用集（`settings.json` 里的收紧）
+### 3.2 代理可用集（`Recommend_Setting.json` 里的收紧）
 
-`settings.json` 只写一条 `"subagents": { "disableBuiltins": true }`——**13 个内置代理全部不参与**，
+`Recommend_Setting.json` 里只写一条 `"subagents": { "disableBuiltins": true }`——**13 个内置代理全部不参与**，
 保留的三个全部来自本仓库（两个 maker 与 `researcher`）。被一票否决的内置代理是：
 
 ```
@@ -109,15 +112,15 @@ reviewer, scout, worker
 
 ## 4. 什么入库、什么忽略
 
-**入库**：`.gitignore`、`README.md`、`AGENTS.md`、`settings.json`、`agents/`、`docs/`、
+**入库**：`.gitignore`、`README.md`、`AGENTS.md`、`Recommend_Setting.json`、`agents/`、`docs/`、
 `extensions/**.ts`、`extensions/visual-tools/package.json` + `package-lock.json`、`skills/`
 
 **忽略**（`.gitignore`）：`npm/`（派生产物）、`sessions/`、`missions/`、`memory/`、
-`web-search-cache/`、`*.jsonl`，以及**默认全部 `*.json`** —— 仅 `settings.json` 与
+`web-search-cache/`、`*.jsonl`，以及**默认全部 `*.json`** —— 仅 `Recommend_Setting.json` 与
 visual-tools 的两个 package 文件在白名单内。
 
-因此以下都**不**入库：`auth.json`、`models.json`、`models-store.json`、`zentui.json`、
-`pi-subagents/last-seen-version.json`、`run-history.jsonl`。
+因此以下都**不**入库：`settings.json`（本机配置，由 pi 拥有，见 §1）、`auth.json`、`models.json`、
+`models-store.json`、`zentui.json`、`pi-subagents/last-seen-version.json`、`run-history.jsonl`。
 
 > ⚠️ 新增仓库必需的 JSON（例如 `tsconfig.json`）时，必须在 `.gitignore` 白名单里显式放行，否则会被静默忽略。
 

@@ -20,11 +20,13 @@ web-search-cache/
 *.jsonl
 
 # ── JSON：默认全忽略，仅白名单放行必需配置 ──────────────────
-# 这条同时挡掉 auth.json / models.json / models-store.json /
-# zentui.json / pi-subagents/*.json 等个人设置与密钥。
+# 这条同时挡掉 settings.json（本机配置：由 pi 拥有、随使用不断变化，
+# 它已于 2026-10-13 取消跟踪，改为入库推荐模板 Recommend_Setting.json）、
+# auth.json / models.json / models-store.json / zentui.json /
+# pi-subagents/*.json 等个人设置与密钥。
 # ⚠️ 顺序敏感：白名单必须写在 *.json 之后。
 # ⚠️ 新增仓库必需 JSON（如 tsconfig.json）时必须在此显式放行，否则会被静默忽略。
 *.json
-!settings.json
+!Recommend_Setting.json
 !extensions/visual-tools/package.json
 !extensions/visual-tools/package-lock.json
