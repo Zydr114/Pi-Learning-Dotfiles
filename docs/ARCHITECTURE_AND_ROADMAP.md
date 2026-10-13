@@ -287,4 +287,4 @@ AI 教学严禁陷入死板反问，设置 4 级支持：
 |---|---|---|
 | **Phase 1: 依赖就位** | 1. 调整 `settings.json`：移除 `rpiv-ask-user-question` 与 `pi-memory`。<br>2. 复制 `quiz.ts` 与 `ask-user-question.ts` 到 profiles。<br>3. 适配 `md-log.ts`：恢复对 Quiz Callout 的记录并保留尖括号转义。 | 运行 `pi -p` 无依赖报错，终端可呼出带判题的 quiz。 |
 | **Phase 2: 核心记忆扩展** | 1. 实现 `extensions/learn-memory.ts`。<br>2. 支持 `ROADMAP.md`、`MASTERY.md`、`evidence.jsonl` 的解析与写入。<br>3. 挂载 `before_agent_start` 动态注入 L0 快照。<br>4. 挂载 `tool_result` 自动收集 Quiz 证据。 | 测验后自动在 `evidence.jsonl` 生成记录，新会话自动显示活动课程快照。 |
-| **Phase 3: 双轨 Skill 升级** | 1. 升级 `skills/teach/SKILL.md`，嵌入动态脚手架规则与 `quiz` 流程。<br>2. 新建 `skills/curriculum/SKILL.md`，嵌入宏观自适应摸底流程。 | `/curriculum` 可开启长程规划，`/teach` 可开展单元微观教学。 |
+| **Phase 3: 双轨 Skill 升级** | 1. 升级 `skills/teach/SKILL.md`，嵌入动态脚手架规则与 `quiz` 流程。<br>2. 新建 `skills/curriculum/SKILL.md`，嵌入宏观自适应摸底流程。 | `/skill:curriculum` 可开启长程规划，`/skill:teach` 可开展单元微观教学（技能在 pi 中注册为 `/skill:<name>`，不存在裸 `/curriculum`）。 |

@@ -135,4 +135,4 @@ learn_save_roadmap({
 After saving:
 1. Announce that the course has been recorded in the persistent archive (`ROADMAP.md` + `MASTERY.md`).
 2. Clearly declare the active unit:
-   > *"The roadmap is locked in! We are set to begin **U01: Shared Memory & Threads**. Whenever you are ready, say 'Let's begin' or type `/teach` to dive into the first lesson!"*
+   > *"The roadmap is locked in! We are set to begin **U01: Shared Memory & Threads**. Whenever you are ready, say 'Let's begin' or type `/skill:teach` to dive into the first lesson!"*

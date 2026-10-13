@@ -75,7 +75,7 @@ quiz({
 * **`correctAnswer` is mandatory** (the matching option's `value`).
 * **`explanation` is mandatory** (explains why the correct option is right).
 * **Never author your own "I don't know" option** — `quiz` adds an automatic, un-penalized `I don't know` choice.
-* The test result is automatically captured as persistent Evidence in `evidence.jsonl`.
+* The test result is automatically captured as persistent Evidence in the active course's `evidence.jsonl` (the capture is skipped when no course is active — start one via `curriculum` / `learn_save_roadmap` first).
 
 ### Using `ask_user_question` (for goal/direction choices only)
 Use when asking: "Which topic would you like to explore next?", "Do you want to focus on theory or code implementation?"

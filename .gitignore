@@ -1,7 +1,30 @@
+# ============================================================
+# pi-learn profile 的 git 策略
+# 原则：只入库「必需的源码 / 技能 / 代理 / 配置」；
+#       运行期数据、个人状态、密钥一律忽略。
+#
+# 注意：gitignore 不支持行内注释 —— 模式后面跟 `# ...` 会让整行
+#       变成一条永远匹配不到的死规则。注释一律另起一行。
+# ============================================================
+
+# ── 运行期数据与派生产物 ────────────────────────────────────
+# npm/ 由 pi 依 settings.json 的 packages 生成，内容非源文件。
+# 例外：npm/.gitignore 是 pi 写的标记文件（内容为 `*` + `!.gitignore`，
+# 设计上就是可入库的），已跟踪，不受这条规则影响。
 npm/
 session/
 sessions/
 missions/
-*.json
-*.jsonl
 memory/
+web-search-cache/
+*.jsonl
+
+# ── JSON：默认全忽略，仅白名单放行必需配置 ──────────────────
+# 这条同时挡掉 auth.json / models.json / models-store.json /
+# zentui.json / pi-subagents/*.json 等个人设置与密钥。
+# ⚠️ 顺序敏感：白名单必须写在 *.json 之后。
+# ⚠️ 新增仓库必需 JSON（如 tsconfig.json）时必须在此显式放行，否则会被静默忽略。
+*.json
+!settings.json
+!extensions/visual-tools/package.json
+!extensions/visual-tools/package-lock.json

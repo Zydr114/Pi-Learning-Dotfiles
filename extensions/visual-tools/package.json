@@ -1,0 +1,10 @@
+{
+  "name": "@learn/visual-tools",
+  "version": "0.1.0",
+  "description": "visual-tools: custom subagent tools (write/edit/render for Mermaid and SVG). Loaded into child sessions by pi-subagents via the mermaid-maker / svg-maker agents' `subagentOnlyExtensions` frontmatter. `typebox` and `@earendil-works/pi-coding-agent` are provided by pi itself (virtual modules), so they are intentionally NOT dependencies here.",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.2"
+  }
+}

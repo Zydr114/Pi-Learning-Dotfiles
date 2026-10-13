@@ -1,0 +1,21 @@
+{
+  "packages": [
+    "npm:pi-zentui",
+    "npm:pi-compact-transcript",
+    "npm:pi-token-speed",
+    "npm:pi-image-tools",
+    "npm:pi-subagents",
+    "npm:pi-web-access"
+  ],
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6.1-sol",
+  "subagents": {
+    "agentOverrides": {
+      "researcher": {
+        "subagentOnlyExtensions": [
+          "/home/zydr/.pi/profiles/learning/npm/node_modules/pi-web-access"
+        ]
+      }
+    }
+  }
+}
