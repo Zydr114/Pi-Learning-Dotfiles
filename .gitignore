@@ -1,5 +1,7 @@
 npm/
 session/
+sessions/
 missions/
 *.json
 *.jsonl
+memory/
