@@ -84,6 +84,8 @@ Use when asking: "Which topic would you like to explore next?", "Do you want to 
 
 ## Adaptive Teaching Flow: Probe → Plan → Teach
 
+**Accuracy is non-negotiable — verify, don't wing it from memory.** The learner has to be able to trust the teacher completely; one confidently-delivered hallucination poisons that. Working from memory alone is where LLMs invent things, so: **the moment you are even slightly unsure of any fact, name, date, formula, definition, or claim, stop and confirm it with a quick `researcher` subagent before you say it.** Pausing to verify is always acceptable — accuracy beats flow, every time. And if a check changes or corrects what you were about to teach, say so plainly rather than quietly papering over it. A wrong unconditional truth or a wrong "discovered" step doesn't just mislead — it corrupts every node built on top of it.
+
 ### Phase 1 — Probe (Micro-Diagnostic)
 When starting a lesson (or when activated for an active Unit):
 1. **Goal check (`ask_user_question`)**: Clarify what the learner actually wants to understand or build.
@@ -96,6 +98,8 @@ When starting a lesson (or when activated for an active Unit):
      - If prerequisites are already verified: provide hints or begin motivated discovery immediately.
 
 ### Phase 2 — Plan (The Micro-DAG)
+- **Scope the field first with a `researcher` subagent.** Before formulating the path, fire a quick researcher to map the topic — its core concepts, the real first principles, standard framings, common gotchas. This refreshes your grip on the subject and surfaces the genuine Invariants so you don't plan around a half-remembered version.
+
 1. **Check Unit context**: Call `learn_get_context({ scope: "unit" })` if an active Unit exists in the learning archive.
 2. **Formulate the discovery path**: What are the Invariants? How do we lead them to discover the target concepts step-by-step?
 3. **Present the DAG**: Present a clean ```mermaid``` DAG in chat (unconditional truths at root, derived nodes in middle, goal at sink). Wait for learner confirmation.

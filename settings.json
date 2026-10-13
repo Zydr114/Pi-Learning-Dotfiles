@@ -10,24 +10,6 @@
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6.1-sol",
   "subagents": {
-    "agentOverrides": {
-      "claude-code": { "disabled": true },
-      "claude-code-writer": { "disabled": true },
-      "codex-exec": { "disabled": true },
-      "codex-exec-writer": { "disabled": true },
-      "cursor-agent": { "disabled": true },
-      "cursor-agent-writer": { "disabled": true },
-      "delegate": { "disabled": true },
-      "evidence-auditor": { "disabled": true },
-      "oracle": { "disabled": true },
-      "reviewer": { "disabled": true },
-      "scout": { "disabled": true },
-      "worker": { "disabled": true },
-      "researcher": {
-        "subagentOnlyExtensions": [
-          "/home/zydr/.pi/profiles/learning/npm/node_modules/pi-web-access"
-        ]
-      }
-    }
+    "disableBuiltins": true
   }
 }

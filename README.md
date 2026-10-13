@@ -51,10 +51,11 @@
 | `teach` | `/skill:teach` | 单 Unit 微观教学：动机驱动发现 + L0–L3 分级脚手架 + `quiz` 检查点 |
 | `visualize` | `/skill:visualize` | 派发 maker 子代理出图，把返回的文件名嵌回 Obsidian 日志 |
 
-本仓库的两个本地代理定义在 `agents/`，由 pi-subagents 从 `<agent dir>/agents/` 发现，均 `advertise: true`（只有它们会出现在父会话的代理目录里）：
+本仓库的本地代理定义在 `agents/`，由 pi-subagents 从 `<agent dir>/agents/` 发现。其中两个 maker 带 `advertise: true`（只有它们会出现在父会话的代理目录里）；`researcher` 不 advertise，靠 `teach` 技能按需点名调用：
 
 | 代理 | 用途 | 环境前置 |
 |---|---|---|
+| `researcher` | 事实核对与领域扫查；`teach` 在不确定时或规划前点名调用，产出 `research.md` | 可联网（§1 的 `pi-web-access`，由该定义自己的 `subagentOnlyExtensions` 注入） |
 | `mermaid-maker` | 结构/关系图：依赖 DAG、流程图、时序图、状态机、树、ER | visual-tools 依赖已装 + 可找到 Chrome/Chromium |
 | `svg-maker` | 空间/几何图：坐标系、数轴、向量、函数图、精确布局 | `rsvg-convert`（缺省回退 ImageMagick `magick`） |
 
@@ -79,8 +80,8 @@ cd ~/.pi/profiles/learning/extensions/visual-tools && npm install
 
 ### 3.2 代理可用集（`settings.json` 里的收紧）
 
-内置代理**只保留 `researcher`**（唯一会上网研究的角色，依赖 §1 的 `pi-web-access`，并靠
-`subagentOnlyExtensions` 覆写把该扩展注入子会话）。其余 12 个已在 `settings.json` 里逐条禁用：
+`settings.json` 只写一条 `"subagents": { "disableBuiltins": true }`——**13 个内置代理全部不参与**，
+保留的三个全部来自本仓库（两个 maker 与 `researcher`）。被一票否决的内置代理是：
 
 ```
 claude-code, claude-code-writer,        # 外部 CLI 适配器
@@ -90,12 +91,14 @@ delegate, evidence-auditor, oracle,     # pi 内置通用代理
 reviewer, scout, worker
 ```
 
-写法即 `subagents.agentOverrides.<name>.disabled: true`。它**硬生效**：点名启动被禁代理会直接报
-`Agent 'X' is disabled by a settings override.`；又因禁用者会从可解析列表里移除，别名（如 `worker` 的
-`developer` / `coder`）同样被拒。恢复只需删掉对应条目。
+禁用是**硬生效**的：点名启动会直接报 `Agent 'X' is disabled by a settings override.`；又因被禁者会从可解析
+列表里移除，别名（如 `worker` 的 `developer` / `coder`）同样被拒。要把某一个放回来（例如 `evidence-auditor`）：
+关掉总开关，再用 `subagents.agentOverrides.<name>.disabled` 把其余逐个禁掉。
 
-> ⚠️ 不要改用一个开关 `subagents.disableBuiltins: true`——它禁的是**全部**内置代理，而 `researcher`
-> 本身就是内置，会被一起误伤。保留集里混着「内置 + 本地」两类来源，只能逐条写。
+> ℹ️ 早先的写法是逐条 `agentOverrides.<name>.disabled: true`。当时 `researcher` 还依赖内置版，总开关会连它
+> 一起禁掉；把 `researcher` 固化成 `agents/researcher.md`（同名遮蔽内置版）之后两者结果完全一致——实测
+> available 与 disabled 集合相同——所以简化为一条开关。固化还有个副作用：升级 pi-subagents 不会改变
+> `researcher` 的提示与工具。
 
 ---
 
