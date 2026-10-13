@@ -2,7 +2,7 @@
 name: researcher
 description: Web researcher — verifies facts and synthesizes a short, sourced brief
 tools: read, write, web_search, fetch_content, get_search_content, source_check
-subagentOnlyExtensions: /home/zydr/.pi/profiles/learning/npm/node_modules/pi-web-access
+subagentOnlyExtensions: ../npm/node_modules/pi-web-access
 thinking: medium
 systemPromptMode: replace
 inheritProjectContext: true

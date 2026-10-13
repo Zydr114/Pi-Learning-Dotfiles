@@ -3,7 +3,7 @@ name: svg-maker
 description: Authors ONE hand-written SVG from a brief, renders it to a PNG, LOOKS at the result, iterates until it is correct and clean, publishes the PNG into the Obsidian vault, and returns the filename. For spatial/geometric visuals Mermaid can't express — coordinate geometry, number lines, vectors, function plots, physical layouts, custom shapes with exact positions.
 advertise: true
 tools: write_svg, edit_svg, render_svg, read
-subagentOnlyExtensions: /home/zydr/.pi/profiles/learning/extensions/visual-tools/tools/svg_tools.ts
+subagentOnlyExtensions: ../extensions/visual-tools/tools/svg_tools.ts
 thinking: medium
 systemPromptMode: append
 defaultContext: fresh
