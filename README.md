@@ -51,7 +51,7 @@
 | `teach` | `/skill:teach` | 单 Unit 微观教学：动机驱动发现 + L0–L3 分级脚手架 + `quiz` 检查点 |
 | `visualize` | `/skill:visualize` | 派发 maker 子代理出图，把返回的文件名嵌回 Obsidian 日志 |
 
-代理定义在 `agents/`，由 pi-subagents 从 `<agent dir>/agents/` 发现，均 `advertise: true`：
+本仓库的两个本地代理定义在 `agents/`，由 pi-subagents 从 `<agent dir>/agents/` 发现，均 `advertise: true`（只有它们会出现在父会话的代理目录里）：
 
 | 代理 | 用途 | 环境前置 |
 |---|---|---|
@@ -76,6 +76,26 @@ cd ~/.pi/profiles/learning/extensions/visual-tools && npm install
 3. 系统路径：`/usr/bin/google-chrome{,-stable}`、`/usr/bin/chromium{,-browser}`、`/usr/bin/ungoogled-chromium`、`/snap/bin/chromium`
 
 即：**"本机没装系统 Chromium" 并不等于渲染不可用**——只要上面任一条命中即可。
+
+### 3.2 代理可用集（`settings.json` 里的收紧）
+
+内置代理**只保留 `researcher`**（唯一会上网研究的角色，依赖 §1 的 `pi-web-access`，并靠
+`subagentOnlyExtensions` 覆写把该扩展注入子会话）。其余 12 个已在 `settings.json` 里逐条禁用：
+
+```
+claude-code, claude-code-writer,        # 外部 CLI 适配器
+codex-exec, codex-exec-writer,
+cursor-agent, cursor-agent-writer,
+delegate, evidence-auditor, oracle,     # pi 内置通用代理
+reviewer, scout, worker
+```
+
+写法即 `subagents.agentOverrides.<name>.disabled: true`。它**硬生效**：点名启动被禁代理会直接报
+`Agent 'X' is disabled by a settings override.`；又因禁用者会从可解析列表里移除，别名（如 `worker` 的
+`developer` / `coder`）同样被拒。恢复只需删掉对应条目。
+
+> ⚠️ 不要改用一个开关 `subagents.disableBuiltins: true`——它禁的是**全部**内置代理，而 `researcher`
+> 本身就是内置，会被一起误伤。保留集里混着「内置 + 本地」两类来源，只能逐条写。
 
 ---
 
